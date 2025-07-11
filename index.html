@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Calculateur de Budget Mensuel</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #28a745;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+    .result {
+      margin-top: 30px;
+      padding: 15px;
+      background: #e9ecef;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧮 Calculateur de Budget Mensuel</h1>
+    <form id="budgetForm">
+      <label for="revenu">Revenu mensuel (€)</label>
+      <input type="number" id="revenu" placeholder="Ex: 2000">
+
+      <h3>Dépenses fixes</h3>
+      <label>Loyer (€)</label>
+      <input type="number" id="loyer">
+      <label>Électricité (€)</label>
+      <input type="number" id="electricite">
+      <label>Internet (€)</label>
+      <input type="number" id="internet">
+      <label>Téléphone (€)</label>
+      <input type="number" id="telephone">
+      <label>Transports (€)</label>
+      <input type="number" id="transport">
+
+      <h3>Dépenses variables</h3>
+      <label>Alimentation (€)</label>
+      <input type="number" id="alimentation">
+      <label>Loisirs (€)</label>
+      <input type="number" id="loisirs">
+      <label>Vêtements (€)</label>
+      <input type="number" id="vetements">
+      <label>Santé (€)</label>
+      <input type="number" id="sante">
+      <label>Imprévus (€)</label>
+      <input type="number" id="imprevus">
+
+      <button type="button" onclick="calculerBudget()">Calculer</button>
+    </form>
+
+    <div class="result" id="resultat"></div>
+  </div>
+
+  <script>
+    function calculerBudget() {
+      const get = id => parseFloat(document.getElementById(id).value) || 0;
+      const revenu = get("revenu");
+      const totalDepenses = get("loyer") + get("electricite") + get("internet") + get("telephone") +
+                            get("transport") + get("alimentation") + get("loisirs") + get("vetements") +
+                            get("sante") + get("imprevus");
+      const reste = revenu - totalDepenses;
+      let message = `<strong>Revenu :</strong> ${revenu.toFixed(2)} €<br>
+                     <strong>Total des dépenses :</strong> ${totalDepenses.toFixed(2)} €<br>
+                     <strong>Reste :</strong> ${reste.toFixed(2)} €<br><br>`;
+
+      if (reste > 0) {
+        message += "✅ Bien joué ! Tu es dans le vert ce mois-ci.";
+      } else if (reste === 0) {
+        message += "⚠️ Tu es juste juste... attention à ne pas dépasser.";
+      } else {
+        message += "🚨 Tu dépenses plus que ce que tu gagnes ! Essaie de revoir certaines catégories.";
+      }
+
+      document.getElementById("resultat").innerHTML = message;
+    }
+  </script>
+</body>
+</html>
